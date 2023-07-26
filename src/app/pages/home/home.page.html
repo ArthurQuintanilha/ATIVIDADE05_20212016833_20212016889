@@ -1,13 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>@rvore</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item button detail lines="full" lines="none" href="/arvores">
+    <ion-icon class="custom-icon" src="assets/icon/arvore_icon.png" slot="start"></ion-icon>
+    <ion-label>Árvores</ion-label>
+  </ion-item>
+  <ion-item button detail lines="full" lines="none" href="meus-dados">
+    <ion-icon name="man" slot="start"></ion-icon>
+    <ion-label>Meus Dados</ion-label>
+  </ion-item>
 </ion-content>
+s

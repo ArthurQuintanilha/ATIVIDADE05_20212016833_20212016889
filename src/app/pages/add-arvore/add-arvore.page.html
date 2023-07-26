@@ -1,0 +1,30 @@
+<ion-header >
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/arvores"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Árvore</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="salvar()">
+    <ion-item>
+      <ion-label position="stacked">Identificação</ion-label>
+      <ion-input type="text" class="form-control border-0 shadow-none" formControlName="identificacao"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Observação</ion-label>
+      <ion-textarea type="text" class="form-control border-0 shadow-none" formControlName="observacao"></ion-textarea>
+    </ion-item>
+
+    <ion-button type="submit" expand="block" class="custom-button" [disabled]="!formGroup.valid">Salvar</ion-button>
+  </form>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/ocorrencias/', arvore.id]" [disabled]="arvore.id === 0">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
