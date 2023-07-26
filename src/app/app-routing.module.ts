@@ -7,6 +7,10 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+    {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
   {
     path: 'arvores',
     loadChildren: () => import('./pages/arvores/arvores.module').then( m => m.ArvoresPageModule)
@@ -16,10 +20,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/meus-dados/meus-dados.module').then( m => m.MeusDadosPageModule)
   },
   {
+    path: 'add-arvore',
+    loadChildren: () => import('./pages/add-arvore/add-arvore.module').then( m => m.AddArvorePageModule)
+  },
+  {
+    path: 'add-arvore/:id',
+    loadChildren: () => import('./pages/add-arvore/add-arvore.module').then( m => m.AddArvorePageModule)
+  },
+  {
+    path: 'ocorrencias/:idArvore',
+    loadChildren: () => import('./pages/ocorrencias/ocorrencias.module').then( m => m.OcorrenciasPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
-
 ];
 
 @NgModule({
