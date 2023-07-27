@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
           Validators.required
         ])],
 
-        'descricao': [this.usuario.senha, Validators.compose([
+        'senha': [this.usuario.senha, Validators.compose([
           Validators.required
         ])],
       }
@@ -40,9 +40,28 @@ export class LoginPage implements OnInit {
     this.usuarioService.isUsuarioExists(this.usuario.email).then((json) => {
       let quantidade = <number>(json);
       if(quantidade > 0) {
-        
+        this.usuarioService.verificarSenha(this.usuario).then((json) => {
+          let teste = <any>(json);
+          if(teste == false){
+            this.exibirMensagem('Senha incorreta');
+          }else{
+            localStorage.setItem('id', JSON.stringify(this.usuario.id));
+            this.navController.navigateBack('/home');
+          }
+        })
+      }else{
+        this.exibirMensagem('Email não cadastrado');
+
       }
     })
+  }
+
+  async exibirMensagem(texto: string) {
+    const toast = await this.toastController.create({
+      message: texto,
+      duration: 1500
+    });
+    toast.present();
   }
 
 }
