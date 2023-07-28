@@ -36,7 +36,6 @@ export class LoginPage implements OnInit {
   autenticar(){
     this.usuario.email = this.formGroup.value.email;
     this.usuario.senha = this.formGroup.value.senha;
-
     this.usuarioService.isUsuarioExists(this.usuario.email).then((json) => {
       let quantidade = <number>(json);
       if(quantidade > 0) {
@@ -45,15 +44,19 @@ export class LoginPage implements OnInit {
           if(teste == false){
             this.exibirMensagem('Senha incorreta');
           }else{
+            this.usuario = teste;
             localStorage.setItem('id', JSON.stringify(this.usuario.id));
             this.navController.navigateBack('/home');
           }
-        })
+        }).catch((erro) => {
+          this.exibirMensagem("Erro ao verificar senha! Erro:" + erro['menssage'])
+        });
       }else{
         this.exibirMensagem('Email não cadastrado');
-
       }
-    })
+    }).catch((erro) => {
+      this.exibirMensagem("Erro ao verificar email! Erro:" + erro['menssage'])
+    });
   }
 
   async exibirMensagem(texto: string) {

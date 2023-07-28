@@ -1,12 +1,24 @@
 <ion-header >
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defautHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Meus Dados</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
+  <form [formGroup]="formGroup">
 
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <input type="text" class="form-control" formControlName="nome" readonly>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <input type="text" class="form-control" formControlName="email" readonly>
+    </ion-item>
+
+  </form>
 </ion-content>
