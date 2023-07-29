@@ -7,19 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- <ion-list>
-    <ion-item-sliding *ngFor="let conta of contas">
-      <ion-item-options side="start">
-        <ion-item-option (click)="excluir(conta)" color="danger">
-          <ion-icon slot="icon-only" color="dark" name="trash"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-      <ion-item [routerLink]="['/add-conta/', conta.id]">
-        <h2><ion-icon name="list-outline"></ion-icon>{{conta.numero}}</h2>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item-sliding *ngFor="let arvore of arvores">
+      <ion-item [routerLink]="['/add-arvore/', arvore.id]">
+        <h3>{{arvore.identificacao}}</h3>
       </ion-item>
     </ion-item-sliding>
-  </ion-list> -->
+  </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/add-arvore" >
       <ion-icon name="add"></ion-icon>
