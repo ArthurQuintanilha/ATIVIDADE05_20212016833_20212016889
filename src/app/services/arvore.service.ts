@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Arvore } from '../modules/arvore';
+import { Arvore } from '../model/arvore';
 
 
 @Injectable({
@@ -22,8 +22,9 @@ export class ArvoreService {
       return await this.httpClient.put(this.url, JSON.stringify(arvore), this.httpHeaders).toPromise();
     }  }
 
-  async listar() {
-    return await this.httpClient.get(this.url).toPromise();
+  async listar(idUsuario: number) {
+    let urlAuxiliar = this.url + "/" + idUsuario +"/usuario";
+    return await this.httpClient.get(urlAuxiliar).toPromise();
   }
 
   async buscarPorId(id: number) {

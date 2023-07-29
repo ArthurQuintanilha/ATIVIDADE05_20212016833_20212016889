@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { MeusDadosPageRoutingModule } from './meus-dados-routing.module';
 
 import { MeusDadosPage } from './meus-dados.page';
-import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { NgxMaskModule } from 'ngx-mask';
     IonicModule,
     MeusDadosPageRoutingModule,
     ReactiveFormsModule,
-    NgxMaskModule.forChild()
   ],
   declarations: [MeusDadosPage]
 })
