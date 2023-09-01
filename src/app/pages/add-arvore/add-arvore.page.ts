@@ -35,7 +35,6 @@ export class AddArvorePage implements OnInit {
         console.log(this.arvore.id);
         this.formGroup.get('identificacao')?.setValue(this.arvore.identificacao);
         this.formGroup.get('observacao')?.setValue(this.arvore.observacao);
-        this.formGroup.get('identificacao')?.disable();
       })
     } else {
       this.arvore.idUsuario = JSON.parse(localStorage.getItem('id') || '[]');
@@ -44,12 +43,13 @@ export class AddArvorePage implements OnInit {
   }
 
   salvar() {
-    this.arvore.identificacao = this.arvore.identificacao === "" ? this.formGroup.value.identificacao : this.arvore.identificacao;
+    this.arvore.identificacao =  this.formGroup.value.identificacao;
     this.arvore.observacao = this.formGroup.value.observacao;
     this.arvoreService.salvar(this.arvore).then((json) => {
       this.arvore = <Arvore>(json);
       if (this.arvoreService)
         if (this.arvore) {
+          console.log(this.arvore.idUsuario)
           this.exibirMensagem("Registro salvo com sucesso!!");
           this.navController.navigateBack('/arvores');
         } else {
