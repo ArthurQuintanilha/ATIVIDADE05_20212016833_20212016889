@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
       if(quantidade > 0) {
         this.usuarioService.verificarSenha(this.usuario).then((json) => {
           let teste = <any>(json);
-          if(teste == false){
+          if(teste === "{}"){
             this.exibirMensagem('Senha incorreta');
           }else{
             this.usuario = teste;
