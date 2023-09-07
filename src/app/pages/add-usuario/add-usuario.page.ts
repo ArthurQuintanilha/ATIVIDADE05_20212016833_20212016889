@@ -23,9 +23,6 @@ export class AddUsuarioPage implements OnInit {
       ])],
       'email': [null, Validators.compose([
         Validators.required,
-      ])],
-      'senha': [null, Validators.compose([
-        Validators.required,
       ])]
     })
    }
@@ -36,18 +33,19 @@ export class AddUsuarioPage implements OnInit {
   async cadastrar() {
     let nome = this.formGroup.value.nome;
     let email = this.formGroup.value.email;
-    let senha = this.formGroup.value.senha;
     this.usuarioService.isUsuarioExists(email).then((json) =>{
       let qtd = <number>(json);
       if (qtd === 0) {
-        this.usuario.senha = senha;
         this.usuario.email = email;
         this.usuario.nome = nome;
+        this.usuario.senha =  Math.random();
+        this.usuarioService.recuperarSenha(this.usuario.email);
         this.usuarioService.salvar(this.usuario).then((json) =>{
           this.usuario = <Usuario>(json);
           console.log(this.usuario)
           if (this.usuario.id > 0) {
-            this.exibirMensagem('Cadastro realizado com sucesso!')
+            this.exibirMensagem('Cadastro realizado com sucesso! Senha enviada para o email de cadastro')
+            this.usuarioService.recuperarSenha(this.usuario.email);
             this.navController.navigateBack('/login');
           } else {
             this.exibirMensagem('Erro ao cadastrar!')
