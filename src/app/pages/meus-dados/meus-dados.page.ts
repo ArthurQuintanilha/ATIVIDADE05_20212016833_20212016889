@@ -55,9 +55,7 @@ export class MeusDadosPage implements OnInit {
   }
 
   async recuperarSenha(){
-    debugger
-    this.usuario.email = this.formGroup.value.email;
-    this.usuarioService.recuperarSenha(this.usuario.email).then((json)=>{
+      this.usuarioService.recuperarSenha(this.usuario.email).then((json)=>{
       let teste = <boolean>(json);
       if(teste = true){
         this.exibirMensagem("Senha enviada para o email de cadastro!");
