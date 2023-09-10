@@ -38,7 +38,7 @@ export class AddUsuarioPage implements OnInit {
       if (qtd === 0) {
         this.usuario.email = email;
         this.usuario.nome = nome;
-        this.usuario.senha =  Math.random();
+        this.usuario.senha =  Math.random().toString(36).substring(2,7);
         this.usuarioService.recuperarSenha(this.usuario.email);
         this.usuarioService.salvar(this.usuario).then((json) =>{
           this.usuario = <Usuario>(json);
