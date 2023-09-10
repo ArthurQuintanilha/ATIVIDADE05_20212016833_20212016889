@@ -13,12 +13,8 @@
         <input type="password" class="form-control border-1 shadow-none" formControlName="senha" />
       </ion-item>
 
-      <ion-button
-        type="submit"
-        class="custom-button"
-        [disabled]="!formGroup.valid"
-        >Entrar</ion-button
-      >
+      <ion-button type="submit" class="custom-button" [disabled]="!formGroup.valid">Entrar</ion-button>
+      <ion-button href="add-usuario" class="custom-button">Cadastrar</ion-button>
     </form>
   </div>
 </ion-content>

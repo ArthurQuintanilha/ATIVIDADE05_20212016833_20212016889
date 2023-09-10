@@ -11,15 +11,20 @@
 <ion-content [fullscreen]="true">
   <form [formGroup]="formGroup">
 
-    <ion-item lines="none">
+    <ion-item>
       <ion-label position="stacked">Nome</ion-label>
-      <input type="text" class="form-control" formControlName="nome" readonly>
+      <input type="text" class="form-control" formControlName="nome">
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="stacked">Email</ion-label>
       <input type="text" class="form-control" formControlName="email" readonly>
     </ion-item>
+
+    <ion-button type="submit" expand="block" color="dark" (click)="salvar()" [disabled]="!formGroup.valid">Salvar</ion-button>
+
+    <ion-button type="submit" (click)="recuperarSenha()" expand="block" color="dark" class="custom-button">Recuperar Senha</ion-button>
+
 
   </form>
 </ion-content>

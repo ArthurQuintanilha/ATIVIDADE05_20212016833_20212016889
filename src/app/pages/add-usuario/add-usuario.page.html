@@ -1,0 +1,21 @@
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center">
+    <img src="assets/img/logo.png" alt="Logo" />
+    <h1>LOGIN</h1>
+    <form [formGroup]="formGroup" (ngSubmit)="cadastrar()">
+
+      <ion-item lines="none">
+        <ion-label position="stacked"><p>Nome</p></ion-label>
+        <input type="text" class="form-control border-1 shadow-none" formControlName="nome" />
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="stacked"><p>Email</p></ion-label>
+        <input type="email" class="form-control border-1 shadow-none" formControlName="email" />
+      </ion-item>
+
+      <ion-button type="submit" class="custom-button" [disabled]="!formGroup.valid">Cadastrar</ion-button>
+    
+    </form>
+  </div>
+</ion-content>
