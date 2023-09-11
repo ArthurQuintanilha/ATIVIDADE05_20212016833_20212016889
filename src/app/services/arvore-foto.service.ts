@@ -13,7 +13,6 @@ export class ArvoreFotoService {
   }
   url: string = 'https://api-arvore2.odiloncorrea.tech/foto';
   urlUpload: string = 'https://api-arvore2.odiloncorrea.tech/foto/upload';
-
   constructor(private httpClient: HttpClient) {
   }
 
