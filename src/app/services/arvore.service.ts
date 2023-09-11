@@ -31,4 +31,10 @@ export class ArvoreService {
     let urlAuxiliar = this.url + "/" + id;
     return await this.httpClient.get(urlAuxiliar).toPromise();
   }
+
+  async excluir(id: number) {
+    let urlAuxiliar = this.url + "/" + id;
+    return await this.httpClient.delete(urlAuxiliar).toPromise();
+
+  }
 }

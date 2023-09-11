@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
   usuario: Usuario;
   formGroup: FormGroup;
 
-  constructor(private usuarioService: UsuarioService,  private fBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController) { 
+  constructor(private usuarioService: UsuarioService,  private fBuilder: FormBuilder, private toastController: ToastController, private navController: NavController) {
     this.usuario = new Usuario();
     this.formGroup = this.fBuilder.group(
       {

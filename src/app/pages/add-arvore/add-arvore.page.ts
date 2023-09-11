@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastController, NavController } from '@ionic/angular';
 import { Arvore } from 'src/app/model/arvore';
 import { ArvoreService } from 'src/app/services/arvore.service';
+import { Geolocation, PositionOptions } from "@capacitor/geolocation";
+
 
 @Component({
   selector: 'app-add-arvore',
@@ -24,6 +26,8 @@ export class AddArvorePage implements OnInit {
         'observacao': [this.arvore.observacao, Validators.compose([
           Validators.required
         ])],
+        'latitude': [{ value: this.arvore.latitude, disabled: true }],
+        'longitude': [{ value: this.arvore.longitude, disabled: true }],
 
       }
 
@@ -68,6 +72,23 @@ export class AddArvorePage implements OnInit {
     });
     toast.present();
   }
+
+  async atualizar(){
+    var opitions : PositionOptions={
+      enableHighAccuracy:true
+    }
+
+    Geolocation.getCurrentPosition(opitions).then((res)=>{
+      this.arvore.latitude = res.coords.latitude;
+      this.arvore.longitude = res.coords.longitude;
+      this.formGroup.get('latitude')?.setValue(this.arvore.latitude);
+      this.formGroup.get('longitude')?.setValue(this.arvore.longitude);
+
+    }).catch((erro)=>{
+      alert(JSON.stringify(erro));
+    })
+  }
   ngOnInit() {
+    this.atualizar();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import {LoadingController, ToastController} from '@ionic/angular';
 import { Arvore } from 'src/app/model/arvore';
 import { ArvoreService } from 'src/app/services/arvore.service';
 
@@ -13,7 +13,7 @@ export class ArvoresPage implements OnInit {
   arvores: Arvore[];
   idUsuario: number;
 
-  constructor(private arvoreService: ArvoreService, private loadingController: LoadingController) {
+  constructor(private arvoreService: ArvoreService, private toastController: ToastController, private loadingController: LoadingController) {
     this.arvores = [];
     this.idUsuario = JSON.parse(localStorage.getItem('id') || '[]');
 
@@ -52,6 +52,22 @@ export class ArvoresPage implements OnInit {
    }, 500);
  }
 
-
+ async deletar(id: number){
+   this.arvoreService.excluir(id).then((json) => {
+     let quantidade = <number>(json);
+     if (quantidade > 0) {
+       this.exibirMensagem('Deletado com sucesso!');
+       this.carregarLista();
+     } else {
+       this.exibirMensagem('Erro ao deletar!');
+     }
+   }); }
+  async exibirMensagem(texto: string) {
+    const toast = await this.toastController.create({
+      message: texto,
+      duration: 1500
+    });
+    toast.present();
+  }
 
 }
