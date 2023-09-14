@@ -102,8 +102,8 @@ export class ArvoreFotoPage implements OnInit {
       }).catch((erro) => {
         console.log('Erro: ', erro)
       });
-    }, 500);
-  }
+    }, 500);
+  }
 
   async exibirMensagem(texto: string) {
     const toast = await this.toastController.create({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Foto} from "../model/foto";
-import {Camera, CameraResultType, CameraSource, Photo} from "@capacitor/camera";
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Foto } from '../model/foto';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +9,21 @@ import {Camera, CameraResultType, CameraSource, Photo} from "@capacitor/camera";
 export class ArvoreFotoService {
 
   httpHeaders = {
-    headers: new HttpHeaders({'Content-Type':'application/json'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   }
-  url: string = 'https://api-arvore2.odiloncorrea.tech/foto';
-  urlUpload: string = 'https://api-arvore2.odiloncorrea.tech/foto/upload';
+
+  url: string = 'https://api-arvore2.odiloncorrea.tech/foto';  
+  url2: string = 'https://api-arvore2.odiloncorrea.tech/upload';  
+
   constructor(private httpClient: HttpClient) {
   }
 
   async salvar(foto: Foto) {
-    return await this.httpClient.post(this.url, JSON.stringify(foto), this.httpHeaders).toPromise();
+    if(foto.id === 0){
+      return await this.httpClient.post(this.url, JSON.stringify(foto), this.httpHeaders).toPromise();
+    }else{
+      return await this.httpClient.put(this.url, JSON.stringify(foto), this.httpHeaders).toPromise();
+    }
   }
 
   async excluir(id: number){
@@ -30,11 +36,12 @@ export class ArvoreFotoService {
     return await this.httpClient.get(urlAuxiliar).toPromise();
   }
 
-  async listarPorIdArvore(idPonto: number){
-    let urlAuxiliar = this.url + "/" + idPonto + "/arvore";
+  async listarPorIdArvore(idArvore: number){
+    
+    let urlAuxiliar = this.url + "/" + idArvore + "/arvore";
     return await this.httpClient.get(urlAuxiliar).toPromise();
   }
-
+  
   async buscarPorId(id: number){
     let urlAuxiliar = this.url + "/" + id;
     return await this.httpClient.get(urlAuxiliar).toPromise();
@@ -48,12 +55,11 @@ export class ArvoreFotoService {
       quality: 100
     });
 
-    let nmFoto = new Date().getTime() +"."+ fotoCapturada.format;
-    console.log(nmFoto)
-    this.upload(fotoCapturada, nmFoto);
+    let nomeImagem = new Date().getTime() +"."+ fotoCapturada.format;
+    this.upload(fotoCapturada, nomeImagem);
 
     let foto = new Foto();
-    foto.imagem = nmFoto;
+    foto.imagem = nomeImagem;
     foto.data = new Date(Date.now()).toISOString();
     foto.idArvore = idArvore;
 
@@ -66,7 +72,6 @@ export class ArvoreFotoService {
 
     const formData = new FormData();
     formData.append('file', blob, nomeImagem);
-    await this.httpClient.post(this.urlUpload, formData).toPromise();
-  }
-
+    await this.httpClient.post(this.url2, formData).toPromise();
+  }
 }
