@@ -16,6 +16,7 @@ export class ArvoresPage implements OnInit {
   arvores: Arvore[];
   idUsuario: number;
   fotoAux: Foto;
+  isBusy: boolean = false;
 
 
   constructor(private arvoreService: ArvoreService, private arvoreFotoService: ArvoreFotoService, private toastController: ToastController, private loadingController: LoadingController) {
@@ -32,12 +33,20 @@ export class ArvoresPage implements OnInit {
   async ionViewWillEnter() {
     this.carregarLista();
   }
-
+ 
   async carregarLista() {
     this.exibirLoader();
+    this.isBusy = true;
     await this.arvoreService.listar(this.idUsuario).then((json) => {
       this.arvores = <Arvore[]>(json);
     });
+    await this.carregarFotos();
+    this.isBusy = false;
+    this.fecharLoader();
+  }
+
+  async carregarFotos() {
+    this.isBusy = true;
     for (const arvore of this.arvores) {
       await this.arvoreFotoService.listarPorIdArvore(arvore.id).then((json) => {
         let fotos = <Foto[]>(json);
@@ -45,28 +54,30 @@ export class ArvoresPage implements OnInit {
           let foto: Foto;
           foto = this.fotoAux;
           this.fotos.push(foto);
+          console.log('Fotos01:', fotos);
         } else {
           this.fotos.push(fotos[0])
+          console.log('Fotos02:', fotos);
         }
       });
     }
-    this.fecharLoader();
+    this.isBusy = false;
   }
-
-  exibirLoader() {
+  
+  exibirLoader(){
     this.loadingController.create({
       message: 'Carregando...'
-    }).then((res) => {
+    }).then((res)=>{
       res.present();
     })
   }
 
 
-  async fecharLoader() {
-    setTimeout(() => {
-      this.loadingController.dismiss().then(() => {
-      }).catch((erro) => {
-        console.log("Erro: ", erro)
+  fecharLoader(){
+    setTimeout(()=>{
+      this.loadingController.dismiss().then(()=>{
+      }).catch((erro)=>{
+        console.log('Erro: ', erro)
       });
     }, 500);
   }
@@ -89,6 +100,7 @@ export class ArvoresPage implements OnInit {
       }
     });
   }
+
   async exibirMensagem(texto: string) {
     const toast = await this.toastController.create({
       message: texto,

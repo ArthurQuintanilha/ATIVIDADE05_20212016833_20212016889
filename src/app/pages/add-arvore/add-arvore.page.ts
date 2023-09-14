@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController, NavController } from '@ionic/angular';
 import { Arvore } from 'src/app/model/arvore';
@@ -18,20 +18,25 @@ export class AddArvorePage implements OnInit {
   constructor(private arvoreService: ArvoreService, private fBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private toastController: ToastController, private navController: NavController) {
     this.arvore = new Arvore();
     this.arvore.id = 0;
-    this.formGroup = this.fBuilder.group(
-      {
-        'identificacao': [this.arvore.identificacao, Validators.compose([
-          Validators.required
-        ])],
-        'observacao': [this.arvore.observacao, Validators.compose([
-          Validators.required
-        ])],
-        'latitude': [{ value: this.arvore.latitude, disabled: true }],
-        'longitude': [{ value: this.arvore.longitude, disabled: true }],
+  
+this.formGroup = this.fBuilder.group(
+  {
+    'identificacao': [this.arvore.identificacao, Validators.compose([
+      Validators.required
+    ])],
+    'observacao': [this.arvore.observacao, Validators.compose([
+      Validators.required
+    ])],
+    'latitude': [
+      { value: this.arvore.latitude, disabled: true },
+    ],
+    'longitude': [
+      { value: this.arvore.longitude, disabled: true },
+    ],
+  }
+);
 
-      }
-
-    )
+    
     let id = this.activatedRoute.snapshot.params['id'];
     if (id != null) {
       this.arvoreService.buscarPorId(parseInt(id)).then((json) => {
@@ -39,6 +44,8 @@ export class AddArvorePage implements OnInit {
         console.log(this.arvore.id);
         this.formGroup.get('identificacao')?.setValue(this.arvore.identificacao);
         this.formGroup.get('observacao')?.setValue(this.arvore.observacao);
+        this.formGroup.get('latitude')?.setValue(this.arvore.latitude);
+        this.formGroup.get('longitude')?.setValue(this.arvore.longitude);
       })
     } else {
       this.arvore.idUsuario = JSON.parse(localStorage.getItem('id') || '[]');
@@ -47,21 +54,25 @@ export class AddArvorePage implements OnInit {
   }
 
   salvar() {
-    this.arvore.identificacao =  this.formGroup.value.identificacao;
-    this.arvore.observacao = this.formGroup.value.observacao;
-    this.arvoreService.salvar(this.arvore).then((json) => {
-      this.arvore = <Arvore>(json);
-      if (this.arvoreService)
-        if (this.arvore) {
-          console.log(this.arvore.idUsuario)
-          this.exibirMensagem("Registro salvo com sucesso!!");
-          this.navController.navigateBack('/arvores');
-        } else {
-          this.exibirMensagem('Erro ao salvar o registro.');
-        }
-    }).catch((erro) => {
-      this.exibirMensagem('Erro aso salvar o registro! Erro: ' + erro["menssage"]);
-    });
+    if(this.arvore.latitude != 0 && this.arvore.longitude != 0){
+      this.arvore.identificacao =  this.formGroup.value.identificacao;
+      this.arvore.observacao = this.formGroup.value.observacao;
+      this.arvoreService.salvar(this.arvore).then((json) => {
+        this.arvore = <Arvore>(json);
+        if (this.arvoreService)
+          if (this.arvore) {
+            console.log(this.arvore.idUsuario)
+            this.exibirMensagem("Registro salvo com sucesso!!");
+            this.navController.navigateBack('/arvores');
+          } else {
+            this.exibirMensagem('Erro ao salvar o registro.');
+          }
+      }).catch((erro) => {
+        this.exibirMensagem('Erro aso salvar o registro! Erro: ' + erro["menssage"]);
+      });
+    }else{
+      this.exibirMensagem('Erro! Por favor, forneça a localização da árvore antes de continuar!');
+    }
 
   }
 
@@ -88,7 +99,7 @@ export class AddArvorePage implements OnInit {
       alert(JSON.stringify(erro));
     })
   }
+
   ngOnInit() {
-    this.atualizar();
   }
 }
