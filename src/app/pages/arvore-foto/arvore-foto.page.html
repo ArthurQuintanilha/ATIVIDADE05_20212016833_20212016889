@@ -1,0 +1,31 @@
+<ion-header >
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="['/add-arvore/', arvore.id]" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Fotos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup">
+    <ion-item>
+      <ion-label position="stacked">Identificação</ion-label>
+      <ion-input type="text" class="form-control border-0 shadow-none" formControlName="identificacao" [disabled]=true></ion-input>
+    </ion-item>
+  </form>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let foto of fotos">
+        <ion-img class="imagem" [src]="foto.imagem"  (click)="excluirFoto(foto.id)"></ion-img>
+        <p class="data" >Data: {{foto.data}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="registrarFoto()" color="dark">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

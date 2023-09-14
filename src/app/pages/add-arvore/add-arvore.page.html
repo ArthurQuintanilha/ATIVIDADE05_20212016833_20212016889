@@ -18,13 +18,35 @@
       <ion-label position="stacked">Observação</ion-label>
       <ion-textarea type="text" class="form-control border-0 shadow-none" formControlName="observacao"></ion-textarea>
     </ion-item>
-
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="stacked"><p>Latitude</p></ion-label>
+            <input type="number" class="form-control border-1 shadow-none" formControlName="latitude" />
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="stacked"><p>Longitude</p></ion-label>
+            <input type="number" class="form-control border-1 shadow-none" formControlName="longitude" />
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <br>
     <ion-button type="submit" expand="block" class="custom-button" [disabled]="!formGroup.valid">Salvar</ion-button>
-  </form>
+    <ion-button type="button" (click)="atualizar()"  color="dark" expand="block" class="custom-button">Atualizar</ion-button>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/ocorrencias/', arvore.id]" [disabled]="arvore.id === 0">
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  </form>
 </ion-content>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button [routerLink]="['/ocorrencias/', arvore.id]" [disabled]="arvore.id === 0">
+    <ion-icon name="menu"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab vertical="bottom" horizontal="start" slot="fixed">
+  <ion-fab-button [routerLink]="['/arvore-foto/', arvore.id]" [disabled]="arvore.id === 0">
+    <ion-icon name="images-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

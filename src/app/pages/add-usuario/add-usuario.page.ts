@@ -44,6 +44,7 @@ export class AddUsuarioPage implements OnInit {
           this.usuario = <Usuario>(json);
           console.log(this.usuario)
           if (this.usuario.id > 0) {
+            debugger
             this.exibirMensagem('Cadastro realizado com sucesso! Senha enviada para o email de cadastro')
             this.usuarioService.recuperarSenha(this.usuario.email);
             this.navController.navigateBack('/login');

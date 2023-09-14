@@ -41,6 +41,7 @@ export class OcorrenciasPage implements OnInit {
         console.log(this.arvore.id);
         this.formGroup.get('identificacao')?.setValue(this.arvore.identificacao);
         this.formGroup.get('identificacao')?.disable();
+        this.carregarLista();
       })
     } else {
       this.navController.navigateBack('/arvores');
@@ -51,40 +52,33 @@ export class OcorrenciasPage implements OnInit {
   ngOnInit() {
   }
 
-
-  async ionViewWillEnter() {
-    this.carregarLista();
-  }
-  async carregarLista() {
-    const loader = await this.carregarLoader(); // Cria o loadingController e obtém sua referência
+  async carregarLista(){
+    this.exibirLoader();
 
     await this.ocorrenciaService.listar(this.arvore.id).then((json) => {
       this.ocorrencias = <Ocorrencia[]>(json);
+      this.fecharLoader();
     });
-
-    this.fecharLoader();
   }
 
-  async carregarLoader() {
-    setTimeout(() => {
-      const loader = this.loadingController.create({
-        message: "Carregando..."
-      }).then(() => {
-      }).catch((erro) => {
-        console.log("Erro: ", erro)
-      });
-    }, 500);
-
+  exibirLoader(){
+    this.loadingController.create({
+      message: 'Carregando...'
+    }).then((res)=>{
+      res.present();
+    })
   }
 
-  fecharLoader() {
-    setTimeout(() => {
-      this.loadingController.dismiss().then(() => {
-      }).catch((erro) => {
-        console.log("Erro: ", erro)
+
+  fecharLoader(){
+    setTimeout(()=>{
+      this.loadingController.dismiss().then(()=>{
+      }).catch((erro)=>{
+        console.log('Erro: ', erro)
       });
     }, 500);
   }
+
 
   salvar() {
     this.ocorrencia.descricao = this.formGroup.value.descricao;
