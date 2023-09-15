@@ -35,6 +35,16 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'add-usuario',
+    loadChildren: () => import('./pages/add-usuario/add-usuario.module').then( m => m.AddUsuarioPageModule)
+  },
+  {
+    path: 'arvore-foto/:idArvore',
+    loadChildren: () => import('./pages/arvore-foto/arvore-foto.module').then( m => m.ArvoreFotoPageModule)
+  },
+
+
 ];
 
 @NgModule({

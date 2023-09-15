@@ -11,7 +11,7 @@ export class ArvoreService {
     headers: new HttpHeaders({'Content-Type':'application/json'})
   }
 
-  url: string = 'https://api-arvore.odiloncorrea.tech/arvore';
+  url: string = 'https://api-arvore2.odiloncorrea.tech/arvore';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -30,5 +30,11 @@ export class ArvoreService {
   async buscarPorId(id: number) {
     let urlAuxiliar = this.url + "/" + id;
     return await this.httpClient.get(urlAuxiliar).toPromise();
+  }
+
+  async excluir(id: number) {
+    let urlAuxiliar = this.url + "/" + id;
+    return await this.httpClient.delete(urlAuxiliar).toPromise();
+
   }
 }
